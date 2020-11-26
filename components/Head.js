@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Text,
   View,
   StyleSheet,
   Image,
-  Button,
   Alert,
   Dimensions,
 } from 'react-native';
@@ -17,6 +16,7 @@ export default function Head() {
     { headBackgroundColor, headHeight, orientation, auth },
     dispatch,
   ] = useStateValue();
+
   const history = useHistory();
   const logout = () => {
     dispatch({
@@ -48,6 +48,7 @@ export default function Head() {
         borderWidth: 1,
         borderBottomWidth: 0,
         borderColor: '#000',
+        elevation: 5,
       });
       setNavigateItemStyle({
         paddingVertical: 20,
@@ -55,6 +56,7 @@ export default function Head() {
         width: muWidth,
         borderBottomWidth: 1,
         borderColor: '#000',
+        marginLeft: 10,
       });
       setShowNavigateItem(false);
     } else {

@@ -3,7 +3,7 @@
     "name": "meeting",
     "slug": "snack-f3d0c90e-5941-4cc4-ba4f-d37f11b8f66f",
     "version": "1.0.0",
-    "orientation": "portrait",
+    "orientation": "default",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",

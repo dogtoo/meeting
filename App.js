@@ -32,13 +32,13 @@ export default function App() {
       paddingTop: Platform.OS === 'android' ? 23 : 0,
     },
   });
+  console.log(Platform.OS);
   return (
-    <React.StrictMode>
       <KeyboardAvoidingView
-        behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+        //behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
         style={styles.container}>
         <AuthProvider initialState={initialState} reducer={reducer}>
-          <StatusBar backgroundColor="white" />
+          {/*<StatusBar backgroundColor="white" />*/}
           <Orientation />
           <NativeRouter>
             <PrivateRoute exact path="/" component={Main} />
@@ -49,6 +49,5 @@ export default function App() {
           </NativeRouter>
         </AuthProvider>
       </KeyboardAvoidingView>
-    </React.StrictMode>
   );
 }

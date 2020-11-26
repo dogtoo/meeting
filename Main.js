@@ -65,7 +65,7 @@ export default function Main() {
         })}
       </ScrollView>
 
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', zIndex: 2 }}>
         <TextInput
           style={styles.main__msgcontainer}
           value={msgSendText}
