@@ -8,28 +8,28 @@ import {
 } from 'react-native';
 import { useStateValue } from '../Auth';
 
-export default function Avatar({ image, content, id }) {
+export default function Avatar({ logo, content, id, onPress, size }) {
   const [{ onSendUser, avatarSize }, dispatch] = useStateValue();
   const [id_, setId] = useState(id);
   const [onpressStyle, setOnpressStyle] = useState({});
-
+  let avatarSize_ = !size ? avatarSize : size
   const handelAvatarTouch = () => {
-    dispatch({
-      type: 'CONN_USER_TOUCH',
-      payload: id_,
-    });
+    onPress ? onPress.call() :
+      dispatch({
+        type: 'CONN_USER_TOUCH',
+        payload: id_,
+      });
   };
-
   useEffect(() => {
     onSendUser === id_
       ? setOnpressStyle({
-          position: 'absolute',
-          backgroundColor: '#FFFF00',
-          width: avatarSize,
-          height: avatarSize,
-          borderRadius: avatarSize,
-          opacity: 0.8,
-        })
+        position: 'absolute',
+        backgroundColor: '#FFFF00',
+        width: avatarSize_,
+        height: avatarSize_,
+        borderRadius: avatarSize_,
+        opacity: 0.8,
+      })
       : setOnpressStyle({});
   }, [onSendUser]);
 
@@ -38,18 +38,17 @@ export default function Avatar({ image, content, id }) {
       marginBottom: 5,
     },
     avatar__image: {
-      width: avatarSize - 5,
-      height: avatarSize - 5,
+      width: avatarSize_ - 5,
+      height: avatarSize_ - 5,
       //resizeMode: 'content',
-      borderRadius: avatarSize - 5,
-      backgroundColor: '#0f0',
+      borderRadius: avatarSize_ - 5,
       justifyContent: 'center',
       alignItems: 'center',
       marginTop: 2.5,
       marginLeft: 2.5,
     },
     avatar__content: {
-      fontSize: avatarSize * 0.6,
+      fontSize: avatarSize_ * 0.6,
       opacity: 0.3,
     },
     avatar__onpress: { ...onpressStyle },
@@ -60,11 +59,11 @@ export default function Avatar({ image, content, id }) {
       onPress={handelAvatarTouch}>
       <View style={styles.avatar__onpress} />
       <ImageBackground
-        source={image}
+        source={logo}
         style={styles.avatar__image}
-        imageStyle={{ borderRadius: avatarSize }}>
+        imageStyle={{ borderRadius: avatarSize_ }}>
         <Text style={styles.avatar__content}>
-          {content ? content.substring(0, 2) : 'M'}
+          {content ? content.substring(0, 2) : ''}
         </Text>
       </ImageBackground>
     </TouchableOpacity>

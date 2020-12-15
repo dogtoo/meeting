@@ -19,7 +19,7 @@ function Login() {
   };
 
   return (
-    <View style={styles.login__container}>
+    <SafeAreaView style={styles.login__container}>
         <Image style={styles.login__titleImage} source={{ uri: 'https://' }} />
       <View style={styles.login__textimage}>
         <Image
@@ -61,7 +61,7 @@ function Login() {
           title="Login"
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 

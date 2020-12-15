@@ -4,6 +4,7 @@ export const initialState = {
   auth: {
     user: {
       email: 'dogtoo.lin@gmail.com',
+      logo: 'https://img.icons8.com/bubbles/344/mac-os.png',
     },
   },
 
@@ -17,36 +18,53 @@ export const initialState = {
   onShowToolBar: false,
   
   //Database
-  message: [],
+  message: [
+    {
+      user: 'dogtoo1',
+      message: 'hello dogtoo.lin@gmail.com',
+      logo: 'https://img.icons8.com/bubbles/344/ibooks.png',
+    },
+    {
+      user: 'dogtoo.lin@gmail.com',
+      message: 'Im dogtoo.lin@gmail.com',
+      logo: 'https://img.icons8.com/bubbles/344/chrome.png',
+    },
+    {
+      user: 'dogtoo1',
+      message: 'hello dogtoo.lin@gmail.com long time no see',
+      logo: 'https://img.icons8.com/bubbles/344/ibooks.png',
+      to: { id: 1, logo:'https://img.icons8.com/bubbles/344/chrome.png'},
+    },
+  ],
   connUsers: [
     {
       id: '1',
-      name: 'user1',
-      //image: '😀',
+      name: 'apple',
+      logo: 'https://img.icons8.com/bubbles/344/mac-os.png',
       onSend: false,
     },
     {
       id: '2',
-      name: 'user2',
-      //image: '🛴',
+      name: 'youtue',
+      logo: 'https://img.icons8.com/bubbles/344/youtube-squared.png',
       onSend: false,
     },
     {
       id: '3',
-      name: 'user3',
-      //image: '👩‍🦰',
+      name: 'maps',
+      logo: 'https://img.icons8.com/bubbles/344/apple-map.png',
       onSend: false,
     },
     {
       id: '4',
-      name: 'user4',
-      //image: '🧓',
+      name: 'ios',
+      logo: 'https://img.icons8.com/bubbles/344/ios-photos.png',
       onSend: false,
     },
     {
       id: '5',
-      name: 'user5',
-      //image: '👮‍♀️',
+      name: 'photo',
+      logo: 'https://img.icons8.com/bubbles/344/adobe-photoshop.png',
       onSend: false,
     },
   ],

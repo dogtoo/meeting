@@ -10,7 +10,7 @@ import {
   Button,
   Easing,
 } from 'react-native';
-//import { TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import Avatar from './Avatar';
 import { useStateValue } from '../Auth';
 
@@ -27,25 +27,32 @@ export default function SideBar() {
 
   const [showBar, setShowBar] = useState(false);
   const barHiddenAnimatedValue = useRef(new Animated.Value(1)).current;
-  
+
   useEffect(() => {
     if (showBar) {
       Animated.timing(barHiddenAnimatedValue, {
         toValue: 0,
-        duration: 300,
+        duration: 500,
         easing: Easing.linear,
         useNativeDriver: false,
       }).start();
     } else {
       Animated.timing(barHiddenAnimatedValue, {
         toValue: 1,
-        duration: 300,
+        duration: 500,
         easing: Easing.linear,
         useNativeDriver: false,
       }).start();
     }
-  }, [showBar]);
+  });
 
+  const handlerBar = () => {
+    if (showBar) {
+      setShowBar(false);
+    } else {
+      setShowBar(true);
+    }
+  };
   const barNotationAnimated = barHiddenAnimatedValue.interpolate({
     inputRange: [0, 1],
     outputRange: ['0deg', '180deg'],
@@ -54,7 +61,6 @@ export default function SideBar() {
     inputRange: [0, 1],
     outputRange: [0, -55],
   });
-
   const styles = StyleSheet.create({
     sidebar__container: {
       position: 'absolute',
@@ -62,10 +68,9 @@ export default function SideBar() {
       top:
         hdHeight +
         (Dimensions.get('screen').height - barHeigh) *
-          (orientation.orientation === 'PORTRAIT' ? 0.3 : 0.05),
+        (orientation.orientation === 'PORTRAIT' ? 0.3 : 0.05),
       height: barHeigh,
       width: 60 + 20,
-      zIndex: 1,
     },
     sidebar__main: {
       width: 60,
@@ -107,30 +112,23 @@ export default function SideBar() {
       height: 50,
       justifyContent: 'center',
       alignItems: 'center',
+      transform: [{ rotate: barNotationAnimated }],
     },
   });
-
-  const handlerBar = () => {
-    if (showBar) {
-      setShowBar(false);
-    } else {
-      setShowBar(true);
-    }
-  };
   return (
-    <Animated.View style={[styles.sidebar__container, {left: barHiddenAnimated}]}>
+    <Animated.View style={{ ...styles.sidebar__container, left: barHiddenAnimated }}>
       <View style={styles.sidebar__main}>
         <ScrollView style={styles.sidebar__scrol}>
-          {connUsers.map(({ name, image, id, onSend }) => {
+          {connUsers.map(({ name, logo, id, onSend }) => {
             return (
-              <Avatar key={id}
-                image={
-                  image
-                    ? { uri: { image } }
+              <Avatar
+                logo={
+                  logo
+                    ? { uri: logo }
                     : {
-                        uri:
-                          'https://static01.nyt.com/images/2014/08/10/magazine/10wmt/10wmt-jumbo-v4.jpg?quality=90&auto=webp',
-                      }
+                      uri:
+                        'https://static01.nyt.com/images/2014/08/10/magazine/10wmt/10wmt-jumbo-v4.jpg?quality=90&auto=webp',
+                    }
                 }
                 content={name}
                 id={id}
@@ -140,7 +138,7 @@ export default function SideBar() {
         </ScrollView>
       </View>
       <View style={styles.sidebar__control}>
-        <Animated.View style={[styles.sidebar__notation, {transform: [{ rotate: barNotationAnimated }]}]}>
+        <Animated.View style={styles.sidebar__notation}>
           <View style={{ position: 'absolute', opacity: 0, zIndex: 1 }}>
             <Button title=" " onPress={() => handlerBar()} />
           </View>

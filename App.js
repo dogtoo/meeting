@@ -23,7 +23,7 @@ export default function App() {
   //Ctrl + ` log panels
   //Ctrl + Alt + F fromat
   //const [orientation, setOrientation] = useState();
-
+  console.log(Platform)
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -32,10 +32,10 @@ export default function App() {
       paddingTop: Platform.OS === 'android' ? 23 : 0,
     },
   });
-  console.log(Platform.OS);
   return (
+    <React.StrictMode>
       <KeyboardAvoidingView
-        //behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+        behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
         style={styles.container}>
         <AuthProvider initialState={initialState} reducer={reducer}>
           {/*<StatusBar backgroundColor="white" />*/}
@@ -43,11 +43,10 @@ export default function App() {
           <NativeRouter>
             <PrivateRoute exact path="/" component={Main} />
             <PrivateRoute exact path="/Equipment" component={Equipment} />
-            <PrivateRoute exact path="/Equipment1" component={Equipment} />
-            <PrivateRoute exact path="/Equipment2" component={Equipment} />
             <Route path="/login" component={Login} />
           </NativeRouter>
         </AuthProvider>
       </KeyboardAvoidingView>
+    </React.StrictMode>
   );
 }

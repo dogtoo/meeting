@@ -38,6 +38,7 @@ export default function Orientation() {
             ? 'PORTRAIT'
             : 'LANDSCAPE',
         platformPadding: Platform.OS === 'android' ? 23 : 0,
+        platformOS: Platform.OS,
         screenSize,
       },
     });
