@@ -17,13 +17,15 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.dogtoo.snackf3d0c90e59414cc4ba4fd37f11b8f66f"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.dogtoo.snackf3d0c90e59414cc4ba4fd37f11b8f66f"
     },
     "web": {
       "favicon": "./assets/favicon.png"
