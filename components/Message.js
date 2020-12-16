@@ -15,7 +15,7 @@ export default function Message({ message, user, to, logo }) {
     },
     message__content: {
       flexDirection: "column",
-     
+
     },
     message__contentto: {
       flexDirection: "row",
@@ -27,8 +27,8 @@ export default function Message({ message, user, to, logo }) {
       borderWidth: 1,
       borderRadius: 10,
       backgroundColor: auth.user.email != user ? '#cceeff' : '#4dc3ff',
-      borderTopRightRadius: auth.user.email != user ? 10: 0,
-      borderTopLeftRadius: auth.user.email != user ? 0: 10,
+      borderTopRightRadius: auth.user.email != user ? 10 : 0,
+      borderTopLeftRadius: auth.user.email != user ? 0 : 10,
     },
     logo: {
       width: avatarSize - 5,
@@ -43,28 +43,36 @@ export default function Message({ message, user, to, logo }) {
   return (
     <View style={styles.container}>
       <Image style={styles.logo} source={{ uri: logo }} />
-      
+
       {auth.user.email != user &&
-      <View style={styles.message__content} >
-        {to?.logo && (
-          <View style={styles.message__contentto} >
-            <Text>to: </Text>
-            <Image style={styles.logo} source={{ uri: to.logo }} />
-          </View>
-        )}
-      </View>}
-      
-      <Text style={styles.paragraph}>{message}</Text>
-      
+        <View style={styles.message__content} >
+          {to?.logo && (
+            <View style={styles.message__contentto} >
+              <Text>to: </Text>
+              <Image style={styles.logo} source={{ uri: to.logo }} />
+            </View>
+          )}
+        </View>}
+      {message.search(/data:image\/jpeg;base64,(.*)/) ? (<Text style={styles.paragraph}>{message}</Text>) : (<Image
+        style={{
+          width: 220,
+          resizeMode: 'contain',
+          height: 220,
+          borderRadius: 20
+        }}
+        source={{ uri: message }}
+      />)}
+
+
       {auth.user.email === user &&
-      <View style={styles.message__content} >
-        {to?.logo && (
-          <View style={styles.message__contentto} >
-            <Text>to: </Text>
-            <Image style={styles.logo} source={{ uri: to.logo }} />
-          </View>
-        )}
-      </View>}
+        <View style={styles.message__content} >
+          {to?.logo && (
+            <View style={styles.message__contentto} >
+              <Text>to: </Text>
+              <Image style={styles.logo} source={{ uri: to.logo }} />
+            </View>
+          )}
+        </View>}
     </View>
   );
 }
