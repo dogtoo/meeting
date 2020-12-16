@@ -119,9 +119,10 @@ export default function SideBar() {
     <Animated.View style={{ ...styles.sidebar__container, left: barHiddenAnimated }}>
       <View style={styles.sidebar__main}>
         <ScrollView style={styles.sidebar__scrol}>
-          {connUsers.map(({ name, logo, id, onSend }) => {
+          {connUsers.map(({ name, logo, id, onSend }, index) => {
             return (
               <Avatar
+                key={index}
                 logo={
                   logo
                     ? { uri: logo }

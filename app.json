@@ -13,9 +13,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.dogtoo.snackf3d0c90e59414cc4ba4fd37f11b8f66f"
@@ -25,7 +23,12 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.dogtoo.snackf3d0c90e59414cc4ba4fd37f11b8f66f"
+      "package": "com.dogtoo.snackf3d0c90e59414cc4ba4fd37f11b8f66f",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyC1p_xyeRncQbBBIVgvdhsLBHrA9GJ5G-8"
+        }
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"

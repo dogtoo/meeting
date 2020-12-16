@@ -68,14 +68,14 @@ export default function Main() {
       <Head />
       <ScrollView style={styles.main__zindex}>
         {/**/}
-        {message.map(({ message, user, to, logo }) => {
-          return <Message message={message} user={user} to={to} logo={logo} />;
+        {message.map(({ message, user, to, logo }, index) => {
+          return <Message key={index} message={message} user={user} to={to} logo={logo} />;
         })}
       </ScrollView>
 
       <View style={styles.main__msgcontainer}>
         <Avatar
-          logo={{uri:'https://img.icons8.com/bubbles/344/facebook-messenger.png'}}
+          logo={{ uri: 'https://img.icons8.com/bubbles/344/facebook-messenger.png' }}
           size={45}
           onPress={() => {
             dispatch({
@@ -88,9 +88,9 @@ export default function Main() {
               },
             });
           }}
-        /> 
+        />
         <Avatar
-          logo={{uri:"https://img.icons8.com/bubbles/344/apple-map.png"}}
+          logo={{ uri: "https://img.icons8.com/bubbles/344/apple-map.png" }}
           size={45}
           onPress={() => {
             history.push('Equipment');
@@ -104,7 +104,7 @@ export default function Main() {
           numberOflines={1}
           onChangeText={(text) => setMsgSendText(text)}
           onContentSizeChange={handelOnContentSizeChange}
-          //onScroll={handelOnScroll}
+        //onScroll={handelOnScroll}
         />
       </View>
     </View>
