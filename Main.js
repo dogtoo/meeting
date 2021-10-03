@@ -20,11 +20,37 @@ import Message from './components/Message';
 import SideBar from './components/SideBar';
 import Avatar from './components/Avatar';
 
+import { gql, useSubscription } from '@apollo/client';
+
 export default function Main() {
   const [{ message, connUsers, auth, onSendUser }, dispatch] = useStateValue();
   const [msgSendText, setMsgSendText] = useState('hello');
   const [onMuiltLine, setOnMuiltLine] = useState(false);
 
+  const MESSAGE_SUBSCRIPT = gql`
+    subscription{
+      messageAdded {
+        name
+        message
+      }
+    }
+  `
+  const { data, loading } = useSubscription(MESSAGE_SUBSCRIPT)
+
+  if (!loading) {
+    console.log(data)
+    dispatch({
+      type: 'MESSAGE_ADD',
+      payload: {
+        user: data.messageAdded.name,
+        //to: { id: onSendUser, logo: connUsers.find(u => u.id === onSendUser)?.logo },
+        message: data.messageAdded.message,
+        logo: auth.user.logo,
+      },
+    });
+  }
+
+  console.log(message)
   const handelOnContentSizeChange = () => {
     console.log('ContentSizeChange');
     setOnMuiltLine(true);

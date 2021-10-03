@@ -16,6 +16,15 @@ import Login from "./Login";
 import Main from "./Main";
 import Equipment from "./Equipment";
 
+//apollo client
+import { WebSocketLink } from '@apollo/client/link/ws';
+import {
+  ApolloClient,
+  NormalizedCacheObject,
+  ApolloProvider,
+  InMemoryCache
+} from '@apollo/client';
+
 export default function App() {
   //Ctrl + S save
   //Ctrl + U Update code on device
@@ -32,21 +41,37 @@ export default function App() {
       paddingTop: Platform.OS === "android" ? 23 : 0,
     },
   });
+
+  const link = new WebSocketLink({
+    uri: `ws://codedogtoo.mynetgear.com:32771/subscriptions`,
+  });
+
+  // create an inmemory cache instance for caching graphql data
+  const cache = new InMemoryCache()
+
+  // instantiate apollo client with apollo link instance and cache instance
+  const client = new ApolloClient({
+    link,
+    cache
+  });
+
   return (
     <React.StrictMode>
       <KeyboardAvoidingView
         behavior={Platform.OS == "ios" ? "padding" : "height"}
         style={styles.container}
       >
-        <AuthProvider initialState={initialState} reducer={reducer}>
-          {/*<StatusBar backgroundColor="white" />*/}
-          <Orientation />
-          <NativeRouter>
-            <PrivateRoute exact path="/" component={Main} />
-            <PrivateRoute exact path="/Equipment" component={Equipment} />
-            <Route path="/login" component={Login} />
-          </NativeRouter>
-        </AuthProvider>
+        <ApolloProvider client={client}>
+          <AuthProvider initialState={initialState} reducer={reducer}>
+            {/*<StatusBar backgroundColor="white" />*/}
+            <Orientation />
+            <NativeRouter>
+              <PrivateRoute exact path="/" component={Main} />
+              <PrivateRoute exact path="/Equipment" component={Equipment} />
+              <Route path="/login" component={Login} />
+            </NativeRouter>
+          </AuthProvider>
+        </ApolloProvider>
       </KeyboardAvoidingView>
     </React.StrictMode>
   );
