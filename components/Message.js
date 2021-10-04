@@ -46,12 +46,12 @@ export default function Message({ message, user, to, logo }) {
 
       {auth.user.email != user &&
         <View style={styles.message__content} >
-          {/* {to?.logo && (
+          {to?.logo && (
             <View style={styles.message__contentto} >
               <Text>to: </Text>
               <Image style={styles.logo} source={{ uri: to.logo }} />
             </View>
-          )} */}
+          )}
         </View>}
       {message.search(/data:image\/jpeg;base64,(.*)/) ? (<Text style={styles.paragraph}>{message}</Text>) : (<Image
         style={{

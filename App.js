@@ -22,8 +22,10 @@ import {
   ApolloClient,
   NormalizedCacheObject,
   ApolloProvider,
-  InMemoryCache
+  InMemoryCache,
+  split, HttpLink
 } from '@apollo/client';
+import { getMainDefinition } from '@apollo/client/utilities';
 
 export default function App() {
   //Ctrl + S save
@@ -42,9 +44,25 @@ export default function App() {
     },
   });
 
-  const link = new WebSocketLink({
+  const httpLink = new HttpLink({
+    uri: 'http://codedogtoo.mynetgear.com:32771/graphql'
+  });
+
+  const wsLink = new WebSocketLink({
     uri: `ws://codedogtoo.mynetgear.com:32771/subscriptions`,
   });
+
+  const link = split(
+    ({ query }) => {
+      const definition = getMainDefinition(query);
+      return (
+        definition.kind === 'OperationDefinition' &&
+        definition.operation === 'subscription'
+      );
+    },
+    wsLink,
+    httpLink,
+  );
 
   // create an inmemory cache instance for caching graphql data
   const cache = new InMemoryCache()

@@ -20,7 +20,7 @@ import Message from './components/Message';
 import SideBar from './components/SideBar';
 import Avatar from './components/Avatar';
 
-import { gql, useSubscription } from '@apollo/client';
+import { gql, useSubscription, useMutation } from '@apollo/client';
 
 export default function Main() {
   const [{ message, connUsers, auth, onSendUser }, dispatch] = useStateValue();
@@ -35,20 +35,28 @@ export default function Main() {
       }
     }
   `
-  const { data, loading } = useSubscription(MESSAGE_SUBSCRIPT)
 
-  if (!loading) {
-    console.log(data)
-    dispatch({
-      type: 'MESSAGE_ADD',
-      payload: {
-        user: data.messageAdded.name,
-        //to: { id: onSendUser, logo: connUsers.find(u => u.id === onSendUser)?.logo },
-        message: data.messageAdded.message,
-        logo: auth.user.logo,
-      },
-    });
+  const ADD_MESSAGE = gql`
+  mutation AddMessage($name: String!, $message: String!){
+    message(name:$name, message:$message) 
   }
+  `
+  const { data, loading } = useSubscription(MESSAGE_SUBSCRIPT)
+  const [addMessage,] = useMutation(ADD_MESSAGE);
+
+  useEffect(() => {
+    if (!loading) {
+      dispatch({
+        type: 'MESSAGE_ADD',
+        payload: {
+          user: data.messageAdded.name,
+          //to: { id: onSendUser, logo: connUsers.find(u => u.id === onSendUser)?.logo },
+          message: data.messageAdded.message,
+          logo: auth.user.logo,
+        },
+      });
+    }
+  }, [data])
 
   console.log(message)
   const handelOnContentSizeChange = () => {
@@ -104,15 +112,17 @@ export default function Main() {
           logo={{ uri: 'https://img.icons8.com/bubbles/344/facebook-messenger.png' }}
           size={45}
           onPress={() => {
-            dispatch({
-              type: 'MESSAGE_ADD',
-              payload: {
-                user: auth.user.email,
-                to: { id: onSendUser, logo: connUsers.find(u => u.id === onSendUser)?.logo },
-                message: msgSendText,
-                logo: auth.user.logo,
-              },
-            });
+
+            addMessage({ variables: { name: auth.user.email, message: msgSendText } })
+            // dispatch({
+            //   type: 'MESSAGE_ADD',
+            //   payload: {
+            //     user: auth.user.email,
+            //     to: { id: onSendUser, logo: connUsers.find(u => u.id === onSendUser)?.logo },
+            //     message: msgSendText,
+            //     logo: auth.user.logo,
+            //   },
+            // });
           }}
         />
         <Avatar
